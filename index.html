@@ -28,26 +28,27 @@
     <meta property="og:title" content="Global Bridge ACAI | Agencia aduanal en Manzanillo, Colima">
     <meta property="og:description" content="El puente que conecta tu negocio con el mundo. Importación, exportación y cumplimiento aduanal con 35 años de experiencia.">
     <meta property="og:url" content="https://www.globalbacai.com.mx/">
-    <meta property="og:image" content="https://www.globalbacai.com.mx/img/og-image.jpg">
+    <meta property="og:image" content="https://www.globalbacai.com.mx/img/og-image.jpg?v=2">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Logotipo de Global Bridge ACAI Consultores Aduanales sobre un globo terráqueo">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Global Bridge ACAI | Agencia aduanal en Manzanillo, Colima">
     <meta name="twitter:description" content="El puente que conecta tu negocio con el mundo. 35 años de experiencia en importación y exportación.">
-    <meta name="twitter:image" content="https://www.globalbacai.com.mx/img/og-image.jpg">
+    <meta name="twitter:image" content="https://www.globalbacai.com.mx/img/og-image.jpg?v=2">
 
-    <!-- ============ ICONOS ============ -->
-    <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
-    <link rel="icon" href="img/favicon-32.png" sizes="32x32" type="image/png">
-    <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+    <!-- ============ ICONOS (globo oficial del logotipo) ============ -->
+    <link rel="icon" href="img/favicon-32.png?v=2" sizes="32x32" type="image/png">
+    <link rel="icon" href="img/favicon-192.png?v=2" sizes="192x192" type="image/png">
+    <link rel="apple-touch-icon" href="img/apple-touch-icon.png?v=2">
 
     <!-- ============ TIPOGRAFÍA ============ -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&family=Sora:wght@500;600;700;800&display=swap" rel="stylesheet">
 
-    <link rel="preload" as="image" href="img/logo-transparente.png">
+    <link rel="preload" as="image" href="img/logo-transparente.webp">
+    <link rel="preload" as="image" href="img/globo.webp">
     <link rel="stylesheet" href="style.css">
 
     <noscript><style>.loader{display:none!important}</style></noscript>
@@ -66,7 +67,9 @@
           "logo": "https://www.globalbacai.com.mx/img/logo.jpeg",
           "image": "https://www.globalbacai.com.mx/img/og-image.jpg",
           "description": "Agenciamiento aduanal y consultoría en comercio exterior en el Puerto de Manzanillo, Colima. Importación, exportación, clasificación arancelaria y cumplimiento regulatorio con 35 años de experiencia.",
-          "telephone": "+52-314-116-4135",
+          "slogan": "Certeza Jurídica, Fiscal y Aduanal",
+          "telephone": ["+52-314-116-4135", "+52-314-109-3264"],
+          "email": "ceorverao@globalbacai.com.mx",
           "address": {
             "@type": "PostalAddress",
             "addressLocality": "Manzanillo",
@@ -76,12 +79,21 @@
           "geo": { "@type": "GeoCoordinates", "latitude": 19.0522, "longitude": -104.3158 },
           "areaServed": [{ "@type": "Country", "name": "México" }],
           "knowsAbout": ["Agenciamiento aduanal", "Importación", "Exportación", "Clasificación arancelaria", "Cumplimiento regulatorio", "Comercio exterior"],
-          "contactPoint": {
-            "@type": "ContactPoint",
-            "telephone": "+52-314-116-4135",
-            "contactType": "customer service",
-            "availableLanguage": ["es", "en"]
-          }
+          "contactPoint": [
+            {
+              "@type": "ContactPoint",
+              "telephone": "+52-314-116-4135",
+              "email": "ceorverao@globalbacai.com.mx",
+              "contactType": "customer service",
+              "availableLanguage": ["es", "en"]
+            },
+            {
+              "@type": "ContactPoint",
+              "telephone": "+52-314-109-3264",
+              "contactType": "customer service",
+              "availableLanguage": ["es", "en"]
+            }
+          ]
         },
         {
           "@type": "WebSite",
@@ -134,7 +146,7 @@
 <body>
     <a class="skip-link" href="#contenido">Saltar al contenido principal</a>
 
-    <!-- Definiciones SVG reutilizables (degradado dorado de marca, globo, etc.) -->
+    <!-- Definiciones SVG reutilizables (degradado dorado de marca, iconos, etc.) -->
     <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
         <defs>
             <linearGradient id="gGold" x1="0" y1="0" x2="1" y2="1">
@@ -142,11 +154,6 @@
                 <stop offset=".5" stop-color="#d1a94f"/>
                 <stop offset="1" stop-color="#8c6a24"/>
             </linearGradient>
-            <radialGradient id="gGlobe" cx=".35" cy=".3" r=".85">
-                <stop offset="0" stop-color="#43aab1"/>
-                <stop offset=".55" stop-color="#155a63"/>
-                <stop offset="1" stop-color="#051f2a"/>
-            </radialGradient>
             <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
             <symbol id="i-wa" viewBox="0 0 32 32"><path fill="currentColor" d="M16.04 3C9.4 3 4 8.37 4 15c0 2.35.68 4.63 1.97 6.6L4 29l7.6-1.94A12.1 12.1 0 0 0 16.04 27C22.66 27 28 21.63 28 15S22.66 3 16.04 3Zm0 21.8c-1.5 0-2.97-.4-4.25-1.16l-.3-.18-4.5 1.15 1.2-4.37-.2-.31A9.6 9.6 0 0 1 6.4 15c0-5.3 4.33-9.6 9.64-9.6 5.3 0 9.6 4.3 9.6 9.6 0 5.29-4.3 9.8-9.6 9.8Zm5.28-7.2c-.29-.15-1.7-.84-1.97-.94-.26-.1-.46-.15-.65.15-.2.29-.75.94-.92 1.13-.17.2-.34.22-.63.07-.29-.15-1.22-.45-2.32-1.43-.86-.76-1.44-1.7-1.6-1.99-.17-.29-.02-.45.13-.6.13-.13.29-.34.44-.5.14-.18.2-.3.29-.5.1-.2.05-.37-.02-.52-.08-.15-.66-1.59-.9-2.17-.24-.57-.48-.5-.66-.5h-.55c-.2 0-.5.07-.76.36-.26.29-1 .98-1 2.4 0 1.4 1.03 2.77 1.17 2.96.15.2 2.03 3.1 4.92 4.35.69.3 1.22.47 1.64.6.69.22 1.32.19 1.82.11.55-.08 1.7-.7 1.94-1.37.24-.67.24-1.25.17-1.37-.07-.12-.26-.2-.55-.34Z"/></symbol>
         </defs>
@@ -162,27 +169,19 @@
 
         <div class="loader__core">
             <div class="loader__stage">
-                <!-- Spinner orbital + globo alámbrico -->
+                <!-- Spinner orbital + globo oficial del logotipo -->
                 <div class="loader__spinner" aria-hidden="true">
+                    <img class="loader__globe" src="img/globo.webp" alt="" width="720" height="720">
                     <svg viewBox="0 0 220 220" class="loader__svg">
                         <circle class="ring ring--a" cx="110" cy="110" r="104"/>
                         <circle class="ring ring--b" cx="110" cy="110" r="94"/>
                         <circle class="ring ring--c" cx="110" cy="110" r="84"/>
-                        <g class="globe-wire">
-                            <circle cx="110" cy="110" r="62" class="gw-base"/>
-                            <ellipse cx="110" cy="110" rx="62" ry="22" class="gw-line"/>
-                            <ellipse cx="110" cy="110" rx="62" ry="48" class="gw-line gw-line--dim"/>
-                            <ellipse cx="110" cy="110" rx="22" ry="62" class="gw-mer gw-mer--1"/>
-                            <ellipse cx="110" cy="110" rx="22" ry="62" class="gw-mer gw-mer--2"/>
-                            <ellipse cx="110" cy="110" rx="22" ry="62" class="gw-mer gw-mer--3"/>
-                            <path d="M48 110h124" class="gw-line gw-line--dim"/>
-                        </g>
                         <circle class="loader__sat" cx="110" cy="6" r="4.5"/>
                     </svg>
                 </div>
                 <!-- Logo real (aparece al 100%) con barrido de luz -->
                 <div class="loader__logo shine" aria-hidden="true">
-                    <img src="img/logo-transparente.png" alt="" width="760" height="623">
+                    <img src="img/logo-transparente.webp" alt="" width="987" height="820">
                 </div>
             </div>
 
@@ -204,16 +203,7 @@
     <header class="site-header" id="site-header">
         <div class="container header__inner">
             <a class="brand" href="#inicio" aria-label="Global Bridge ACAI Consultores Aduanales, ir al inicio">
-                <svg class="brand__mark" viewBox="0 0 48 48" aria-hidden="true">
-                    <circle cx="24" cy="24" r="19" fill="url(#gGlobe)"/>
-                    <g fill="none" stroke="#9fe4e6" stroke-opacity=".5" stroke-width=".8">
-                        <ellipse cx="24" cy="24" rx="8" ry="19"/>
-                        <ellipse cx="24" cy="24" rx="15" ry="19"/>
-                        <path d="M5 24h38M8 14h32M8 34h32"/>
-                    </g>
-                    <path d="M2.5 32c10 9 33 9 43 0" fill="none" stroke="url(#gGold)" stroke-width="2.6" stroke-linecap="round"/>
-                    <circle cx="24" cy="24" r="19" fill="none" stroke="url(#gGold)" stroke-width="1.2"/>
-                </svg>
+                <img class="brand__mark" src="img/globo-icono.webp" alt="" width="46" height="46">
                 <span class="brand__text">
                     <span class="brand__gb">Global Bridge</span>
                     <span class="brand__acai">ACAI</span>
@@ -228,6 +218,7 @@
                     <li><a href="#proceso">Proceso</a></li>
                     <li><a href="#puerto">Cobertura</a></li>
                     <li><a href="#ventajas">Ventajas</a></li>
+                    <li><a href="#avisos">Avisos</a></li>
                     <li><a href="#faq">Preguntas</a></li>
                 </ul>
                 <a class="btn btn--gold nav__cta" href="#contacto">Solicitar cotización</a>
@@ -268,9 +259,9 @@
                     </h1>
 
                     <p class="hero__lead">
-                        Agenciamiento aduanal en importación y exportación, con certeza documental,
-                        cumplimiento preventivo y el respaldo de <strong>35 años de experiencia</strong>
-                        desde el puerto más importante de México.
+                        <strong class="hero__tagline">Su socio aduanal de confianza en el comercio internacional.</strong>
+                        Agenciamiento aduanal en importación y exportación, con <strong>Certeza Jurídica, Fiscal y Aduanal</strong>
+                        y el respaldo de <strong>35 años de experiencia</strong> desde el puerto más importante de México.
                     </p>
 
                     <div class="hero__cta">
@@ -330,10 +321,10 @@
         <div class="marquee" aria-hidden="true">
             <div class="marquee__track">
                 <div class="marquee__group">
-                    <span>Importación</span><i></i><span>Exportación</span><i></i><span>Clasificación arancelaria</span><i></i><span>Pedimentos</span><i></i><span>Cumplimiento NOM</span><i></i><span>Tratados y origen</span><i></i><span>Consultoría en comercio exterior</span><i></i>
+                    <span>Certeza Jurídica, Fiscal y Aduanal</span><i></i><span>Importación</span><i></i><span>Exportación</span><i></i><span>Trámites efectivos para despachos específicos</span><i></i><span>Clasificación arancelaria</span><i></i><span>Auditoría &amp; defensa</span><i></i><span>Su socio aduanal de confianza en el comercio internacional</span><i></i><span>Pedimentos</span><i></i><span>Cumplimiento NOM</span><i></i><span>Pasión por hacer que suceda el comercio internacional</span><i></i><span>Tratados y origen</span><i></i><span>Consultoría en comercio exterior</span><i></i>
                 </div>
                 <div class="marquee__group">
-                    <span>Importación</span><i></i><span>Exportación</span><i></i><span>Clasificación arancelaria</span><i></i><span>Pedimentos</span><i></i><span>Cumplimiento NOM</span><i></i><span>Tratados y origen</span><i></i><span>Consultoría en comercio exterior</span><i></i>
+                    <span>Certeza Jurídica, Fiscal y Aduanal</span><i></i><span>Importación</span><i></i><span>Exportación</span><i></i><span>Trámites efectivos para despachos específicos</span><i></i><span>Clasificación arancelaria</span><i></i><span>Auditoría &amp; defensa</span><i></i><span>Su socio aduanal de confianza en el comercio internacional</span><i></i><span>Pedimentos</span><i></i><span>Cumplimiento NOM</span><i></i><span>Pasión por hacer que suceda el comercio internacional</span><i></i><span>Tratados y origen</span><i></i><span>Consultoría en comercio exterior</span><i></i>
                 </div>
             </div>
         </div>
@@ -358,30 +349,33 @@
 
                 <div class="about__copy">
                     <p class="eyebrow" data-reveal="up">Quiénes somos</p>
-                    <h2 class="h2" id="about-title" data-split>Treinta y cinco años de oficio. Ahora, con nombre propio.</h2>
+                    <h2 class="h2" id="about-title" data-split>Experiencia al servicio de su empresa</h2>
                     <p class="lead" data-reveal="up">
-                        Global Bridge ACAI nace de más de tres décadas moviendo carga a través del puerto de Manzanillo.
-                        Hoy damos el siguiente paso: una agencia aduanal independiente, ágil y cercana, donde tu operación
-                        se atiende de forma directa, con criterio experto y sin respuestas genéricas.
+                        En Global Bridge ACAI integramos un equipo multidisciplinario experto en derecho aduanero,
+                        fiscal, clasificación arancelaria y logística internacional.
+                    </p>
+                    <p class="lead lead--follow" data-reveal="up">
+                        Nos enfocamos en prevenir riesgos fiscales, anticipar cambios regulatorios y brindar una
+                        atención personalizada que asegura el flujo continuo de sus mercancías.
                     </p>
 
                     <ul class="pillars">
                         <li data-reveal="up" data-delay="1">
                             <span class="pillars__icon" aria-hidden="true">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="5"/><path d="M8.5 13.5L7 21l5-3 5 3-1.5-7.5"/></svg>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 01-11.8 7L3 21l2-5.5A8 8 0 1121 12z"/></svg>
                             </span>
                             <div>
-                                <h3>Experiencia comprobada</h3>
-                                <p>Conocemos el puerto, sus tiempos y sus reglas no escritas.</p>
+                                <h3>Atención personalizada</h3>
+                                <p>Comunicación constante y soluciones a la medida de sus necesidades.</p>
                             </div>
                         </li>
                         <li data-reveal="up" data-delay="2">
                             <span class="pillars__icon" aria-hidden="true">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 01-11.8 7L3 21l2-5.5A8 8 0 1121 12z"/></svg>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg>
                             </span>
                             <div>
-                                <h3>Trato directo</h3>
-                                <p>Hablas con quien opera tu embarque, por el canal que prefieras.</p>
+                                <h3>Proactividad orientada al progreso</h3>
+                                <p>La evolución es inevitable: estamos actualizados para adaptarnos asertivamente a los cambios.</p>
                             </div>
                         </li>
                         <li data-reveal="up" data-delay="3">
@@ -389,8 +383,8 @@
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 4.5-3.2 8-8 9-4.8-1-8-4.5-8-9V6l8-3z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg>
                             </span>
                             <div>
-                                <h3>Cumplimiento primero</h3>
-                                <p>Prevenimos multas y retrasos antes de que aparezcan.</p>
+                                <h3>Certeza Jurídica, Fiscal y Aduanal</h3>
+                                <p>Gestionamos y agilizamos los procesos con calidad certificada, garantizando con eficiencia su seguridad fiscal y legal.</p>
                             </div>
                         </li>
                     </ul>
@@ -418,6 +412,36 @@
                     </div>
                 </dl>
             </div>
+
+            <div class="container">
+                <div class="mv">
+                    <article class="mv__card" data-reveal="up">
+                        <h3>Nuestra Misión</h3>
+                        <p>Ser el puente estratégico que conecte a las empresas con el comercio global, garantizando la seguridad jurídica, la eficiencia en el despacho aduanal y la optimización continua de la cadena de suministro.</p>
+                    </article>
+                    <article class="mv__card" data-reveal="up" data-delay="1">
+                        <h3>Nuestra Visión</h3>
+                        <p>Posicionarnos como la firma de consultoría aduanera de mayor confianza y excelencia en el país, reconocida por la innovación, transparencia y blindaje operativo en cada importación y exportación.</p>
+                    </article>
+                </div>
+            </div>
+
+            <div class="container">
+                <figure class="profile" data-reveal="up">
+                    <img class="profile__img" src="img/perfil-banner.webp" alt="Ejecutivo sosteniendo una red global de comercio con buque, tren, avión y camión de carga" width="1365" height="530" loading="lazy">
+                    <figcaption class="profile__card">
+                        <p class="profile__kicker">Su socio aduanal de confianza en el comercio internacional</p>
+                        <p class="profile__name">Ing. Roberto Vera Orozco</p>
+                        <p class="profile__role">Asesoría, proyectos y logística aduanal</p>
+                        <ul class="profile__contact">
+                            <li><a href="tel:+523141164135">314 116 4135</a></li>
+                            <li><a href="tel:+523141093264">314 109 3264</a></li>
+                            <li><a href="mailto:ceorverao@globalbacai.com.mx">ceorverao@globalbacai.com.mx</a></li>
+                        </ul>
+                        <p class="profile__slogan">Trámites efectivos para despachos específicos · Pasión por hacer que suceda el comercio internacional</p>
+                    </figcaption>
+                </figure>
+            </div>
         </section>
 
         <!-- =====================================================
@@ -427,7 +451,7 @@
             <div class="container">
                 <header class="section__head">
                     <p class="eyebrow" data-reveal="up">Servicios</p>
-                    <h2 class="h2" id="services-title" data-split>Todo el despacho, en un solo equipo.</h2>
+                    <h2 class="h2" id="services-title" data-split>Servicios especializados</h2>
                     <p class="section__sub" data-reveal="up">
                         Desde la primera consulta hasta la liberación de tu mercancía, cada paso está cubierto
                         por especialistas que conocen el puerto de Manzanillo.
@@ -435,39 +459,56 @@
                 </header>
 
                 <div class="bento">
-                    <article class="card card--import" data-reveal="up" data-spotlight data-tilt>
+                    <article class="card card--despacho" data-reveal="up" data-spotlight data-tilt>
                         <span class="card__num" aria-hidden="true">01</span>
                         <span class="card__icon" aria-hidden="true">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2"/></svg>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 15h17l-1.7 4.2a1 1 0 0 1-.9.6H6.1a1 1 0 0 1-.9-.6L3.5 15z"/><path d="M6 15v-4h12v4"/><path d="M9 11V8h6v3"/><path d="M12 8V5.5"/></svg>
                         </span>
-                        <h3>Importación</h3>
-                        <p class="card__tag">Tu mercancía, sin tropiezos en la aduana.</p>
-                        <p>Despacho aduanero de principio a fin: revisamos documentos, calculamos contribuciones y coordinamos con terminal y transporte para que tu carga llegue a tiempo.</p>
-                        <ul class="card__list">
-                            <li>Revisión documental previa al arribo</li>
-                            <li>Pedimentos y cálculo de contribuciones</li>
-                            <li>Coordinación con terminal y transporte</li>
-                        </ul>
-                        <a class="card__link" href="https://wa.me/523141164135?text=Hola%2C%20me%20interesa%20el%20servicio%20de%20importaci%C3%B3n." target="_blank" rel="noopener noreferrer">
-                            Consultar por WhatsApp <svg aria-hidden="true"><use href="#i-arrow"/></svg>
-                        </a>
+                        <h3>Despacho aduanal</h3>
+                        <p>Gestión integral para la liberación oportuna de mercancías de importación y exportación bajo regímenes aduaneros vigentes.</p>
+                        <div class="card__cols">
+                            <div>
+                                <h4>Importación</h4>
+                                <ul class="card__list">
+                                    <li>Revisión documental previa al arribo</li>
+                                    <li>Pedimentos y cálculo de contribuciones</li>
+                                    <li>Coordinación con terminal y transporte</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4>Exportación</h4>
+                                <ul class="card__list">
+                                    <li>Pedimentos de exportación</li>
+                                    <li>Requisitos documentales del destino</li>
+                                    <li>Seguimiento hasta la salida de la carga</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card__links">
+                            <a class="card__link" href="https://wa.me/523141164135?text=Hola%2C%20me%20interesa%20el%20servicio%20de%20importaci%C3%B3n." target="_blank" rel="noopener noreferrer">
+                                Consultar importación <svg aria-hidden="true"><use href="#i-arrow"/></svg>
+                            </a>
+                            <a class="card__link" href="https://wa.me/523141164135?text=Hola%2C%20me%20interesa%20el%20servicio%20de%20exportaci%C3%B3n." target="_blank" rel="noopener noreferrer">
+                                Consultar exportación <svg aria-hidden="true"><use href="#i-arrow"/></svg>
+                            </a>
+                        </div>
                         <span class="card__glow" aria-hidden="true"></span>
                     </article>
 
-                    <article class="card card--export" data-reveal="up" data-delay="1" data-spotlight data-tilt>
+                    <article class="card card--audit" data-reveal="up" data-delay="1" data-spotlight data-tilt>
                         <span class="card__num" aria-hidden="true">02</span>
                         <span class="card__icon" aria-hidden="true">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3m0 0L8 7m4-4l4 4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2"/></svg>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v16M8 20h8"/><path d="M5 7h14"/><path d="M5 7l-2.5 6a3 3 0 0 0 5 0L5 7z"/><path d="M19 7l-2.5 6a3 3 0 0 0 5 0L19 7z"/></svg>
                         </span>
-                        <h3>Exportación</h3>
-                        <p class="card__tag">Tu producto llega al mundo con respaldo.</p>
-                        <p>Preparamos la documentación y el pedimento de exportación para que tu embarque salga sin contratiempos y cumpla con los requisitos del destino.</p>
+                        <h3>Auditoría &amp; Defensa</h3>
+                        <p class="card__tag">Prevención antes que sanción.</p>
+                        <p>Revisión preventiva de expedientes de comercio exterior y asesoría jurídica ante visitas domiciliarias o <abbr title="Procedimiento Administrativo en Materia Aduanera">PAMA</abbr>.</p>
                         <ul class="card__list">
-                            <li>Pedimentos de exportación</li>
-                            <li>Requisitos documentales del destino</li>
-                            <li>Seguimiento hasta la salida de la carga</li>
+                            <li>Auditorías previas rigurosas a su operación</li>
+                            <li>Expediente digital auditado</li>
+                            <li>Defensa jurídica ante visitas domiciliarias y PAMA</li>
                         </ul>
-                        <a class="card__link" href="https://wa.me/523141164135?text=Hola%2C%20me%20interesa%20el%20servicio%20de%20exportaci%C3%B3n." target="_blank" rel="noopener noreferrer">
+                        <a class="card__link" href="https://wa.me/523141164135?text=Hola%2C%20me%20interesa%20el%20servicio%20de%20auditor%C3%ADa%20y%20defensa." target="_blank" rel="noopener noreferrer">
                             Consultar por WhatsApp <svg aria-hidden="true"><use href="#i-arrow"/></svg>
                         </a>
                         <span class="card__glow" aria-hidden="true"></span>
@@ -479,7 +520,7 @@
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h9M4 18h6"/><circle cx="17.5" cy="16.5" r="3"/><path d="M19.8 18.8L22 21"/></svg>
                         </span>
                         <h3>Clasificación arancelaria</h3>
-                        <p>La fracción correcta desde el primer día, para evitar multas, rectificaciones y sorpresas en tus costos.</p>
+                        <p>Determinación precisa de fracciones arancelarias, <abbr title="Número de Identificación Comercial">NICO</abbr> y verificación del cumplimiento de Normas Oficiales y permisos.</p>
                         <a class="card__link" href="https://wa.me/523141164135?text=Hola%2C%20necesito%20apoyo%20con%20clasificaci%C3%B3n%20arancelaria." target="_blank" rel="noopener noreferrer">
                             Consultar <svg aria-hidden="true"><use href="#i-arrow"/></svg>
                         </a>
@@ -520,6 +561,11 @@
                             </span>
                             <h3>Consultoría en comercio exterior</h3>
                             <p>¿Vas a importar o exportar por primera vez? ¿Quieres optimizar costos y tiempos? Diseñamos contigo la estrategia aduanal ideal para tu empresa: programas de comercio exterior, planeación de operaciones y revisión de tus procesos actuales.</p>
+                            <ul class="card__tags" aria-label="También ofrecemos">
+                                <li>Asesoría, coordinación y proyectos</li>
+                                <li>Logística integral</li>
+                                <li>Fletes nacionales</li>
+                            </ul>
                         </div>
                         <a class="btn btn--gold" href="https://wa.me/523141164135?text=Hola%2C%20quiero%20agendar%20una%20asesor%C3%ADa%20en%20comercio%20exterior." target="_blank" rel="noopener noreferrer" data-magnetic>
                             <span>Agendar asesoría</span>
@@ -534,18 +580,18 @@
         <!-- =====================================================
              5 · PROCESO (línea de ruta ligada al scroll)
              ===================================================== -->
-        <section class="section process" id="proceso" aria-labelledby="process-title">
+        <section class="section section--light process" id="proceso" aria-labelledby="process-title">
             <div class="container process__layout">
                 <div class="process__intro">
                     <div class="process__sticky">
                         <p class="eyebrow" data-reveal="up">Cómo trabajamos</p>
-                        <h2 class="h2" id="process-title" data-split>La ruta de tu operación, sin puntos ciegos.</h2>
+                        <h2 class="h2" id="process-title" data-split>Proceso de trabajo estructurado</h2>
                         <p class="section__sub section__sub--left" data-reveal="up">
-                            Un método claro en cinco etapas para que sepas en qué punto está tu carga y qué sigue.
+                            Un método claro en cuatro etapas para que sepas en qué punto está tu carga y qué sigue.
                         </p>
                         <div class="process__counter" aria-hidden="true">
                             <span class="process__now" id="process-now">01</span>
-                            <span class="process__of">/ 05</span>
+                            <span class="process__of">/ 04</span>
                         </div>
                         <a class="btn btn--ghost" href="#contacto" data-magnetic>Iniciar mi operación</a>
                     </div>
@@ -558,40 +604,32 @@
                         <span class="step__dot" aria-hidden="true"></span>
                         <div class="step__body" data-spotlight>
                             <span class="step__n">01</span>
-                            <h3>Cuéntanos tu operación</h3>
-                            <p>Nos compartes qué mercancía mueves, su origen o destino y tus fechas. Por WhatsApp o formulario, sin trámites ni citas previas.</p>
+                            <h3>Diagnóstico</h3>
+                            <p>Revisión documental inicial y análisis del régimen aduanero aplicable.</p>
                         </div>
                     </li>
                     <li class="step" data-reveal="up">
                         <span class="step__dot" aria-hidden="true"></span>
                         <div class="step__body" data-spotlight>
                             <span class="step__n">02</span>
-                            <h3>Análisis y clasificación</h3>
-                            <p>Revisamos tus documentos, definimos la fracción arancelaria y detectamos regulaciones aplicables antes de que se conviertan en problemas.</p>
+                            <h3>Validación</h3>
+                            <p>Clasificación arancelaria, cálculo de impuestos y verificación de <abbr title="Normas Oficiales Mexicanas">NOMs</abbr>.</p>
                         </div>
                     </li>
                     <li class="step" data-reveal="up">
                         <span class="step__dot" aria-hidden="true"></span>
                         <div class="step__body" data-spotlight>
                             <span class="step__n">03</span>
-                            <h3>Cumplimiento y pedimento</h3>
-                            <p>Integramos el expediente, gestionamos permisos o certificados y elaboramos el pedimento con el cálculo exacto de contribuciones.</p>
+                            <h3>Operación</h3>
+                            <p>Elaboración de pedimento, pago de contribuciones y despacho aduanal.</p>
                         </div>
                     </li>
                     <li class="step" data-reveal="up">
                         <span class="step__dot" aria-hidden="true"></span>
                         <div class="step__body" data-spotlight>
                             <span class="step__n">04</span>
-                            <h3>Despacho en Manzanillo</h3>
-                            <p>Damos seguimiento al despacho ante la aduana y coordinamos con terminal y transporte para que la liberación sea ágil.</p>
-                        </div>
-                    </li>
-                    <li class="step" data-reveal="up">
-                        <span class="step__dot" aria-hidden="true"></span>
-                        <div class="step__body" data-spotlight>
-                            <span class="step__n">05</span>
-                            <h3>Entrega y seguimiento</h3>
-                            <p>Te entregamos tu documentación completa y quedamos disponibles para la siguiente operación. Tu expediente, siempre en orden.</p>
+                            <h3>Entrega</h3>
+                            <p>Monitoreo en tránsito y entrega de expediente digital auditado.</p>
                         </div>
                     </li>
                 </ol>
@@ -644,9 +682,10 @@
             <div class="container">
                 <header class="section__head">
                     <p class="eyebrow" data-reveal="up">Por qué elegirnos</p>
-                    <h2 class="h2" id="adv-title" data-split>Menos riesgo. Más velocidad. Cero improvisación.</h2>
+                    <h2 class="h2" id="adv-title" data-split>Nuestra propuesta de valor</h2>
                     <p class="section__sub" data-reveal="up">
-                        Una operación aduanal mal planeada cuesta tiempo y dinero. Así cambia cuando la llevamos nosotros.
+                        Menos riesgo, más velocidad y cero improvisación. Una operación aduanal mal planeada cuesta tiempo
+                        y dinero; así cambia cuando la llevamos nosotros.
                     </p>
                 </header>
 
@@ -675,33 +714,69 @@
 
                 <div class="values">
                     <article class="value" data-reveal="up" data-delay="1">
-                        <span class="value__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M9 2h6"/></svg></span>
-                        <h3>Respuesta ágil</h3>
-                        <p>Tu tiempo vale. Contestamos rápido y sin rodeos.</p>
+                        <span class="value__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 4.5-3.2 8-8 9-4.8-1-8-4.5-8-9V6l8-3z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg></span>
+                        <h3>Certeza Aduanal, Legal y Fiscal</h3>
+                        <p>Eliminación de riesgos y prevención de sanciones mediante auditorías previas rigurosas.</p>
                     </article>
                     <article class="value" data-reveal="up" data-delay="2">
-                        <span class="value__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H8l-4 4V5z"/><path d="M8 9h8M8 12h5"/></svg></span>
-                        <h3>Transparencia total</h3>
-                        <p>Sabes qué se hace, cuándo y por qué, en cada etapa.</p>
+                        <span class="value__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M9 2h6"/></svg></span>
+                        <h3>Despacho Eficiente</h3>
+                        <p>Reducción de tiempos de liberación en aduanas terrestres y marítimas.</p>
                     </article>
                     <article class="value" data-reveal="up" data-delay="3">
-                        <span class="value__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></svg></span>
-                        <h3>Confidencialidad</h3>
-                        <p>Tu información comercial se maneja con absoluta discreción.</p>
+                        <span class="value__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.2 7-11.5A7 7 0 005 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></span>
+                        <h3>Trazabilidad y Monitoreo</h3>
+                        <p>Visibilidad completa del estatus de su carga en tiempo real durante todo el proceso.</p>
                     </article>
                     <article class="value" data-reveal="up" data-delay="4">
                         <span class="value__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg></span>
-                        <h3>Visión de negocio</h3>
-                        <p>No solo despachamos: te ayudamos a ahorrar y crecer.</p>
+                        <h3>Optimización de Costos</h3>
+                        <p>Correcta aplicación de tratados internacionales y beneficios arancelarios.</p>
                     </article>
                 </div>
             </div>
         </section>
 
         <!-- =====================================================
-             8 · FAQ
+             8 · AVISOS Y NOTICIAS
+             Se alimenta de avisos.js (circulares, clima, tipo de cambio).
+             Ese archivo es el ÚNICO que hay que editar para publicar o quitar avisos.
              ===================================================== -->
-        <section class="section faq" id="faq" aria-labelledby="faq-title">
+        <section class="section notices" id="avisos" aria-labelledby="notices-title">
+            <div class="container">
+                <header class="section__head">
+                    <p class="eyebrow" data-reveal="up">Avisos y noticias</p>
+                    <h2 class="h2" id="notices-title" data-split>Circulares y avisos al día</h2>
+                    <p class="section__sub" data-reveal="up">
+                        Circulares de la aduana y del puerto, condiciones de clima y novedades que pueden afectar su operación.
+                    </p>
+                </header>
+
+                <div class="rate" id="notices-rate" hidden>
+                    <span class="rate__label">Tipo de cambio</span>
+                    <strong class="rate__value" id="rate-value"></strong>
+                    <span class="rate__meta" id="rate-meta"></span>
+                </div>
+
+                <div class="notices__list" id="notices-list" aria-live="polite">
+                    <div class="notices__empty" id="notices-empty" data-reveal="up">
+                        <span class="notices__empty-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9a6 6 0 0112 0c0 5 2 6.5 2 6.5H4S6 14 6 9z"/><path d="M10 19a2 2 0 004 0"/></svg>
+                        </span>
+                        <p><strong>Sin avisos por el momento.</strong> Cuando haya una circular de la aduana o del puerto, o una condición de clima que afecte la operación, la publicaremos aquí.</p>
+                        <a class="link-arrow link-arrow--dark" href="https://wa.me/523141164135?text=Hola%2C%20necesito%20informaci%C3%B3n%20sobre%20avisos%20de%20la%20aduana%20o%20del%20puerto." target="_blank" rel="noopener noreferrer">
+                            ¿Necesita información urgente? Escríbanos
+                            <svg aria-hidden="true"><use href="#i-arrow"/></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =====================================================
+             9 · FAQ
+             ===================================================== -->
+        <section class="section section--light faq" id="faq" aria-labelledby="faq-title">
             <div class="container faq__grid">
                 <header class="faq__head">
                     <p class="eyebrow" data-reveal="up">Preguntas frecuentes</p>
@@ -745,7 +820,7 @@
         </section>
 
         <!-- =====================================================
-             9 · CONTACTO (CTA final + formulario a WhatsApp)
+             10 · CONTACTO (CTA final + formulario a WhatsApp)
              ===================================================== -->
         <section class="section contact" id="contacto" aria-labelledby="contact-title">
             <div class="contact__photo" aria-hidden="true">
@@ -768,6 +843,20 @@
                             <div>
                                 <span class="ch__label">WhatsApp</span>
                                 <a href="https://wa.me/523141164135" target="_blank" rel="noopener noreferrer">+52 314 116 4135</a>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="ch__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 005 5L15 13l5 2v4a2 2 0 01-2 2A16 16 0 013 6a2 2 0 012-2z"/></svg></span>
+                            <div>
+                                <span class="ch__label">Teléfonos</span>
+                                <a href="tel:+523141164135">314 116 4135</a><span class="ch__sep" aria-hidden="true"> · </span><a href="tel:+523141093264">314 109 3264</a>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="ch__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></span>
+                            <div>
+                                <span class="ch__label">Correo</span>
+                                <a class="ch__mail" href="mailto:ceorverao@globalbacai.com.mx">ceorverao@globalbacai.com.mx</a>
                             </div>
                         </li>
                         <li>
@@ -860,6 +949,8 @@
             <div class="footer__brand">
                 <p class="footer__claim">El puente que conecta tu negocio con el mundo.</p>
                 <p class="footer__small">Agenciamiento aduanal y consultoría en comercio exterior · Puerto de Manzanillo, Colima.</p>
+                <p class="footer__slogan">Certeza Jurídica, Fiscal y Aduanal</p>
+                <p class="footer__small footer__small--tight">Trámites efectivos para despachos específicos · Pasión por hacer que suceda el comercio internacional · Su socio aduanal de confianza en el comercio internacional</p>
             </div>
             <nav class="footer__nav" aria-label="Navegación del pie de página">
                 <h2>Explorar</h2>
@@ -868,6 +959,7 @@
                     <li><a href="#servicios">Servicios</a></li>
                     <li><a href="#proceso">Proceso</a></li>
                     <li><a href="#puerto">Cobertura</a></li>
+                    <li><a href="#avisos">Avisos</a></li>
                     <li><a href="#faq">Preguntas frecuentes</a></li>
                 </ul>
             </nav>
@@ -875,6 +967,8 @@
                 <h2>Contacto</h2>
                 <ul>
                     <li><a href="https://wa.me/523141164135" target="_blank" rel="noopener noreferrer">WhatsApp +52 314 116 4135</a></li>
+                    <li><a href="tel:+523141093264">Tel. 314 109 3264</a></li>
+                    <li><a href="mailto:ceorverao@globalbacai.com.mx">ceorverao@globalbacai.com.mx</a></li>
                     <li>Puerto de Manzanillo, Colima</li>
                     <li><a href="#contacto">Solicitar cotización</a></li>
                 </ul>
@@ -902,6 +996,8 @@
         </a>
     </div>
 
+    <!-- avisos.js: lista editable de circulares/avisos/tipo de cambio (se carga antes que main.js) -->
+    <script src="avisos.js" charset="utf-8" defer></script>
     <script src="main.js" defer></script>
 </body>
 </html>

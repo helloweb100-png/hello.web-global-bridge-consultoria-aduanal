@@ -16,7 +16,8 @@
    11. FAQ
    12. Formulario → WhatsApp
    13. WhatsApp flotante y detalles finales
-   14. Arranque
+   14. Avisos y noticias (datos en avisos.js)
+   15. Arranque
    ===================================================================== */
 (() => {
     'use strict';
@@ -163,6 +164,9 @@
             this.cfg = cfg;
             this.hero = !!cfg.hero;
             this.interactive = !!cfg.interactive;
+            // Con "reducir animaciones" activo en el equipo, el globo SIGUE girando (es la animación de marca
+            // que el cliente espera ver), pero a ritmo más calmado y sin parallax de puntero ni giro por scroll.
+            this.calm = reduceMotion;
             this.lon = cfg.lon;
             this.tilt = cfg.tilt;
             this.baseSpeed = cfg.speed;       // °/s (la Tierra gira hacia el este: lon disminuye)
@@ -237,7 +241,7 @@
             const rect = this.canvas.getBoundingClientRect();
             const W = Math.max(1, Math.round(rect.width));
             const H = Math.max(1, Math.round(rect.height));
-            this.dpr = Math.min(window.devicePixelRatio || 1, isMobile() ? 1.5 : 1.75);
+            this.dpr = this.lite ? 1 : Math.min(window.devicePixelRatio || 1, isMobile() ? 1.5 : 1.75);
             this.W = W; this.H = H;
             this.canvas.width = Math.round(W * this.dpr);
             this.canvas.height = Math.round(H * this.dpr);
@@ -246,7 +250,13 @@
             // ribbons: gradientes reutilizables
             this.ribbons = null;
             if (this.hero) this.buildRibbons();
-            if (!this.visible || reduceMotion) this.render(0, 0);
+            if (!this.visible) this.render(0, 0);
+        }
+
+        /* Modo ligero: menos resolución y menos hilos de luz (ver watchPerf) */
+        setLite() {
+            this.lite = true;
+            this.resize();
         }
 
         buildRibbons() {
@@ -341,16 +351,13 @@
                 this.idleFor += dt;
                 if (this.free || this.idleFor > 3) {
                     this.spin *= Math.exp(-dt / 1.5);
-                    this.lon -= (this.baseSpeed + this.spin) * dt;
+                    this.lon -= (this.baseSpeed * (this.calm ? 0.75 : 1) + this.spin) * dt;
                     if (this.idleFor > 3 && !this.free && this.interactive) this.free = true;
                 }
             }
-            if (this.hero) this.lon -= this.extraLon;
+            if (this.hero && !this.calm) this.lon -= this.extraLon;
             this.extraLon = 0;
 
-            if (this.hero) {
-                // el impulso inicial también actúa aunque no haya interacción
-            }
             for (const a of this.arcs) a.phase = (a.phase + a.speed * dt * 0.5) % 1.4;
         }
 
@@ -394,7 +401,7 @@
             const px = this.mouse.sx * 18;
             for (const r of this.ribbons) {
                 const x0 = r.ax * W + px, y0 = r.ay * H, x3 = r.bx * W + px, y3 = r.by * H;
-                const strands = 7;
+                const strands = this.lite ? 3 : 7;
                 for (let k = 0; k < strands; k++) {
                     const o = (k - (strands - 1) / 2);
                     const w1 = Math.sin(t * 0.32 + r.ph + k * 0.11) * W * r.amp;
@@ -407,8 +414,8 @@
                     ctx.moveTo(x0, y0);
                     ctx.bezierCurveTo(c1x, c1y, c2x, c2y, x3, y3);
                     ctx.strokeStyle = r.g;
-                    ctx.lineWidth = (k === 3 ? 1.8 : 0.8) * r.w;
-                    ctx.globalAlpha = k === 3 ? 0.95 : 0.55;
+                    ctx.lineWidth = (k === strands >> 1 ? 1.8 : 0.8) * r.w;
+                    ctx.globalAlpha = k === strands >> 1 ? 0.95 : 0.55;
                     ctx.stroke();
                 }
                 // resplandor suave bajo el haz
@@ -500,19 +507,20 @@
         drawGlobe(ctx, t) {
             const { cx, cy, R } = this;
 
-            // atmósfera exterior
-            let g = ctx.createRadialGradient(cx, cy, R * 0.94, cx, cy, R * 1.46);
-            g.addColorStop(0, 'rgba(94,234,240,.36)');
-            g.addColorStop(0.32, 'rgba(42,143,151,.15)');
+            // atmósfera exterior (halo del cristal)
+            let g = ctx.createRadialGradient(cx, cy, R * 0.94, cx, cy, R * 1.5);
+            g.addColorStop(0, 'rgba(126,228,234,.42)');
+            g.addColorStop(0.3, 'rgba(60,160,170,.18)');
             g.addColorStop(1, 'rgba(42,143,151,0)');
             ctx.fillStyle = g;
-            ctx.beginPath(); ctx.arc(cx, cy, R * 1.46, 0, TAU); ctx.fill();
+            ctx.beginPath(); ctx.arc(cx, cy, R * 1.5, 0, TAU); ctx.fill();
 
-            // cuerpo de cristal
-            g = ctx.createRadialGradient(cx - R * 0.34, cy - R * 0.4, R * 0.04, cx, cy, R * 1.04);
-            g.addColorStop(0, 'rgba(32,128,140,.9)');
-            g.addColorStop(0.5, 'rgba(9,52,64,.92)');
-            g.addColorStop(1, 'rgba(3,17,25,.95)');
+            // cuerpo de cristal: océano en teal luminoso, como el globo del logotipo
+            g = ctx.createRadialGradient(cx - R * 0.36, cy - R * 0.44, R * 0.05, cx + R * 0.08, cy + R * 0.1, R * 1.08);
+            g.addColorStop(0, 'rgba(132,200,206,.98)');
+            g.addColorStop(0.26, 'rgba(70,142,152,.98)');
+            g.addColorStop(0.6, 'rgba(27,88,100,.98)');
+            g.addColorStop(1, 'rgba(6,32,42,.99)');
             ctx.fillStyle = g;
             ctx.beginPath(); ctx.arc(cx, cy, R, 0, TAU); ctx.fill();
 
@@ -524,38 +532,47 @@
                 const cg = ctx.createConicGradient(t * 0.6, cx, cy);
                 cg.addColorStop(0, 'rgba(94,234,240,0)');
                 cg.addColorStop(0.86, 'rgba(94,234,240,0)');
-                cg.addColorStop(1, 'rgba(94,234,240,.08)');
+                cg.addColorStop(1, 'rgba(94,234,240,.10)');
                 ctx.fillStyle = cg;
                 ctx.fillRect(cx - R, cy - R, R * 2, R * 2);
             }
 
-            // graticula
-            ctx.lineWidth = 0.7;
-            ctx.strokeStyle = 'rgba(127,214,216,.11)';
-            ctx.beginPath();
-            for (let lat = -60; lat <= 60; lat += 20) this.strokeParallel(ctx, lat);
-            for (let lon = -180; lon < 180; lon += 20) this.strokeMeridian(ctx, lon);
-            ctx.stroke();
-
-            // puntos de tierra: cara trasera (tenue, efecto cristal) + delantera por niveles de brillo
+            // tierra: se proyecta una sola vez y se reparte por brillo
             const d = this.dots, n = d.length / 3;
-            const rr = R * 0.0088;
-            const back = [], b = [[], [], [], []];
+            const rr = R * 0.0092;
+            const bed = [], back = [], b = [[], [], [], []];
             for (let i = 0; i < n; i++) {
                 const p = this.proj(d[i * 3], d[i * 3 + 1], d[i * 3 + 2]);
                 const z = p[2];
-                if (z > 0.03) b[Math.min(3, Math.floor(z * 4))].push(p[0], p[1], z);
+                if (z > 0.03) { b[Math.min(3, Math.floor(z * 4))].push(p[0], p[1], z); bed.push(p[0], p[1]); }
                 else if (z < -0.05) back.push(p[0], p[1]);
             }
-            ctx.fillStyle = 'rgba(127,214,216,.09)';
+
+            // continentes oscuros (base) sobre el océano claro
+            const rb = R * 0.0235;
+            ctx.fillStyle = 'rgba(8,40,50,.84)';
             ctx.beginPath();
-            const rb = rr * 0.7;
-            for (let i = 0; i < back.length; i += 2) { ctx.moveTo(back[i] + rb, back[i + 1]); ctx.arc(back[i], back[i + 1], rb, 0, TAU); }
+            for (let i = 0; i < bed.length; i += 2) { ctx.moveTo(bed[i] + rb, bed[i + 1]); ctx.arc(bed[i], bed[i + 1], rb, 0, TAU); }
             ctx.fill();
-            const alphas = [0.32, 0.55, 0.78, 0.98];
+
+            // retícula de meridianos y paralelos (sobre océano y tierra)
+            ctx.lineWidth = 0.8;
+            ctx.strokeStyle = 'rgba(196,238,240,.2)';
+            ctx.beginPath();
+            for (let lat = -75; lat <= 75; lat += 15) this.strokeParallel(ctx, lat);
+            for (let lon = -180; lon < 180; lon += 15) this.strokeMeridian(ctx, lon);
+            ctx.stroke();
+
+            // trama de puntos: cara trasera (tenue, efecto cristal) + delantera por niveles de brillo
+            ctx.fillStyle = 'rgba(170,230,234,.10)';
+            ctx.beginPath();
+            const rbk = rr * 0.7;
+            for (let i = 0; i < back.length; i += 2) { ctx.moveTo(back[i] + rbk, back[i + 1]); ctx.arc(back[i], back[i + 1], rbk, 0, TAU); }
+            ctx.fill();
+            const alphas = [0.42, 0.64, 0.86, 1];
             for (let k = 0; k < 4; k++) {
                 const arr = b[k];
-                ctx.fillStyle = `rgba(133,232,236,${alphas[k]})`;
+                ctx.fillStyle = `rgba(214,246,247,${alphas[k]})`;
                 ctx.beginPath();
                 for (let i = 0; i < arr.length; i += 3) {
                     const r = rr * (0.55 + 0.5 * arr[i + 2]);
@@ -572,11 +589,11 @@
                 const p = this.proj(d[i * 3], d[i * 3 + 1], d[i * 3 + 2]);
                 if (p[2] > 0.1) {
                     const pulse = 0.55 + 0.45 * Math.sin(t * 2 + this.nodePh[k]);
-                    const rad = R * 0.02 * (0.7 + pulse * 0.6);
+                    const rad = R * 0.024 * (0.7 + pulse * 0.6);
                     const gg = ctx.createRadialGradient(p[0], p[1], 0, p[0], p[1], rad * 2.4);
-                    gg.addColorStop(0, `rgba(255,232,160,${0.95 * p[2]})`);
-                    gg.addColorStop(0.35, `rgba(227,196,111,${0.45 * p[2]})`);
-                    gg.addColorStop(1, 'rgba(227,196,111,0)');
+                    gg.addColorStop(0, `rgba(255,238,176,${0.98 * p[2]})`);
+                    gg.addColorStop(0.35, `rgba(240,196,100,${0.55 * p[2]})`);
+                    gg.addColorStop(1, 'rgba(240,196,100,0)');
                     ctx.fillStyle = gg;
                     ctx.beginPath(); ctx.arc(p[0], p[1], rad * 2.4, 0, TAU); ctx.fill();
                 }
@@ -584,26 +601,43 @@
             ctx.globalCompositeOperation = 'source-over';
             ctx.restore();
 
-            // brillo de borde (fresnel) y aro de luz
-            g = ctx.createRadialGradient(cx, cy, R * 0.7, cx, cy, R);
-            g.addColorStop(0, 'rgba(94,234,240,0)');
-            g.addColorStop(0.86, 'rgba(94,234,240,.10)');
-            g.addColorStop(1, 'rgba(94,234,240,.46)');
+            // brillo de borde (fresnel)
+            g = ctx.createRadialGradient(cx, cy, R * 0.72, cx, cy, R);
+            g.addColorStop(0, 'rgba(150,236,240,0)');
+            g.addColorStop(0.86, 'rgba(150,236,240,.14)');
+            g.addColorStop(1, 'rgba(170,240,244,.52)');
             ctx.fillStyle = g;
             ctx.beginPath(); ctx.arc(cx, cy, R, 0, TAU); ctx.fill();
 
-            g = ctx.createRadialGradient(cx - R * 0.42, cy - R * 0.5, 0, cx - R * 0.42, cy - R * 0.5, R * 0.62);
-            g.addColorStop(0, 'rgba(255,255,255,.14)');
+            // destello especular amplio (arriba-izquierda)
+            g = ctx.createRadialGradient(cx - R * 0.42, cy - R * 0.5, 0, cx - R * 0.42, cy - R * 0.5, R * 0.66);
+            g.addColorStop(0, 'rgba(255,255,255,.22)');
             g.addColorStop(1, 'rgba(255,255,255,0)');
             ctx.fillStyle = g;
             ctx.beginPath(); ctx.arc(cx, cy, R, 0, TAU); ctx.fill();
 
+            // reflejo curvo del cristal (media luna que se desvanece en los extremos)
+            ctx.lineWidth = R * 0.03;
+            ctx.lineCap = 'butt';
+            const SEG = 22, a0 = Math.PI * 1.04, a1 = Math.PI * 1.56;
+            for (let i = 0; i < SEG; i++) {
+                const s = Math.sin(Math.PI * (i + 0.5) / SEG);
+                ctx.strokeStyle = `rgba(255,255,255,${(0.5 * s * s).toFixed(3)})`;
+                ctx.beginPath();
+                ctx.arc(cx, cy, R * 0.955, a0 + (a1 - a0) * i / SEG, a0 + (a1 - a0) * (i + 1) / SEG + 0.004);
+                ctx.stroke();
+            }
+
+            // doble aro de cristal
+            ctx.strokeStyle = 'rgba(190,240,244,.2)';
+            ctx.lineWidth = 1;
+            ctx.beginPath(); ctx.arc(cx, cy, R * 1.016, 0, TAU); ctx.stroke();
             const rim = ctx.createLinearGradient(cx - R, cy - R, cx + R, cy + R);
-            rim.addColorStop(0, 'rgba(166,236,238,.85)');
-            rim.addColorStop(0.5, 'rgba(94,234,240,.25)');
+            rim.addColorStop(0, 'rgba(190,244,246,.9)');
+            rim.addColorStop(0.5, 'rgba(94,234,240,.28)');
             rim.addColorStop(1, 'rgba(227,196,111,.6)');
             ctx.strokeStyle = rim;
-            ctx.lineWidth = 1.3;
+            ctx.lineWidth = 1.4;
             ctx.beginPath(); ctx.arc(cx, cy, R, 0, TAU); ctx.stroke();
         }
 
@@ -770,11 +804,35 @@
     let lastT = performance.now();
     function mainLoop(now) {
         requestAnimationFrame(mainLoop);
-        const dt = Math.min(0.05, (now - lastT) / 1000);
+        // Tope generoso: en equipos lentos (pocos FPS) el globo conserva su velocidad real de giro
+        // en lugar de arrastrarse; solo se limita el salto tras volver de otra pestaña.
+        const dt = Math.min(0.12, (now - lastT) / 1000);
         lastT = now;
         if (document.hidden) return;
+        watchPerf(now);
         for (const s of scenes) if (s.visible) s.frame(now / 1000, dt);
         for (const fn of frameHooks) fn(dt);
+    }
+
+    /* Modo ligero automático: si el equipo no sostiene ~24 FPS con la portada visible, se simplifica el
+       fondo decorativo (auroras, grano, desenfoques) y el canvas. El globo sigue girando a su velocidad real. */
+    const perf = { t0: 0, frames: 0, done: false };
+    function watchPerf(now) {
+        if (perf.done || window.scrollY > window.innerHeight * 0.5) return;
+        const hero = $('.hero');
+        if (!hero || !hero.classList.contains('is-ready')) return;
+        if (!perf.t0) { perf.t0 = now; return; }
+        const el = now - perf.t0;
+        if (el < 1200) return;                          // calentamiento tras el loader
+        perf.frames++;
+        if (el > 4200) {                                // ~3 s de muestra
+            perf.done = true;
+            const fps = perf.frames / ((el - 1200) / 1000);
+            if (fps < 24) {
+                document.documentElement.classList.add('is-lite');
+                scenes.forEach((s) => s.setLite());
+            }
+        }
     }
 
     function trackVisibility(scene, el) {
@@ -789,7 +847,7 @@
         if (!canvas) return null;
         const scene = new GlobeScene(canvas, {
             hero: true,
-            lon: 140, tilt: 20, speed: 5.5, spinUp: 150,
+            lon: 140, tilt: 20, speed: 9, spinUp: 150,
             layout: (w, h) => {
                 const head = w >= 900 ? 82 : 68;
                 if (w >= 900) {
@@ -802,11 +860,10 @@
         });
         scenes.push(scene);
         trackVisibility(scene, canvas.parentElement);
-        if (reduceMotion) { scene.lon = -100; scene.render(0, 0); }
 
-        // parallax de puntero
+        // parallax de puntero (no con "reducir animaciones")
         const hero = canvas.parentElement;
-        if (finePointer) {
+        if (finePointer && !reduceMotion) {
             hero.addEventListener('pointermove', (e) => {
                 const r = hero.getBoundingClientRect();
                 scene.mouse.x = ((e.clientX - r.left) / r.width - 0.5) * 2;
@@ -833,7 +890,8 @@
         document.body.classList.add('is-locked');
         const pctEl = $('#loader-pct'), barEl = $('#loader-bar'), statusEl = $('#loader-status');
         const seen = store.get('gb-seen') === '1';
-        const minTime = reduceMotion ? 250 : (seen ? 1100 : 2800);
+        // La intro de marca (loader) se muestra completa también con "reducir animaciones": dura pocos segundos.
+        const minTime = seen ? 1100 : 2800;
         const steps = [
             [0, 'Iniciando aduana digital'],
             [28, 'Conectando puertos'],
@@ -855,11 +913,11 @@
             statusEl.textContent = 'Bienvenido';
             loader.classList.add('is-logo');
             store.set('gb-seen', '1');
-            const logoHold = reduceMotion ? 100 : (seen ? 700 : 1500);
+            const logoHold = seen ? 700 : 1500;
             setTimeout(() => {
                 loader.classList.add('is-done');
-                setTimeout(finishSite, reduceMotion ? 0 : 450);
-                setTimeout(() => { loader.classList.add('is-gone'); loader.setAttribute('aria-hidden', 'true'); }, reduceMotion ? 50 : 1350);
+                setTimeout(finishSite, 450);
+                setTimeout(() => { loader.classList.add('is-gone'); loader.setAttribute('aria-hidden', 'true'); }, 1350);
             }, logoHold);
         };
 
@@ -1220,13 +1278,12 @@
         if (!canvas) return;
         const scene = new GlobeScene(canvas, {
             interactive: true,
-            lon: -170, tilt: 44, speed: 4, lane: 'asia', dotStep: 2.1,
+            lon: -170, tilt: 44, speed: 6, lane: 'asia', dotStep: 2.1,
             layout: (w, h) => ({ cx: w / 2, cy: h / 2, R: Math.min(w, h) * 0.37 })
         });
         scene.focusOn(LANE_VIEW.asia, 'asia');
         scenes.push(scene);
         trackVisibility(scene, canvas);
-        if (reduceMotion) scene.render(0, 0);
 
         const buttons = $$('.lane');
         const info = $('#lane-info');
@@ -1364,7 +1421,95 @@
     }
 
     /* ------------------------------------------------------------------
-       14. ARRANQUE
+       14. AVISOS Y NOTICIAS  (los datos viven en avisos.js)
+    ------------------------------------------------------------------ */
+    function initNotices() {
+        const section = $('#avisos');
+        if (!section) return;
+        const list = $('#notices-list');
+        const empty = $('#notices-empty');
+        const rateBox = $('#notices-rate');
+        const cfg = window.GB_AVISOS;
+
+        // Sin datos que mostrar: se oculta la sección y también sus accesos (menú y pie de página)
+        const hideAll = () => {
+            section.hidden = true;
+            $$('a[href="#avisos"]').forEach((a) => { (a.closest('li') || a).hidden = true; });
+        };
+        if (!cfg || typeof cfg !== 'object') { hideAll(); return; }
+
+        const TYPES = { aduana: 'Circular de la aduana', puerto: 'Aviso del puerto', clima: 'Clima', noticia: 'Noticia' };
+        const pad = (n) => String(n).padStart(2, '0');
+        const now = new Date();
+        const today = now.getFullYear() + '-' + pad(now.getMonth() + 1) + '-' + pad(now.getDate());
+        const fmtDate = (iso) => {
+            const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(iso || '').trim());
+            if (!m) return '';
+            const d = new Date(+m[1], +m[2] - 1, +m[3]);
+            return isNaN(d) ? '' : d.toLocaleDateString('es-MX', { day: 'numeric', month: 'long', year: 'numeric' });
+        };
+        const safeUrl = (u) => {
+            try { const url = new URL(String(u || '').trim()); return /^https?:$/.test(url.protocol) ? url.href : ''; } catch (e) { return ''; }
+        };
+        const make = (tag, cls, text) => {
+            const n = document.createElement(tag);
+            if (cls) n.className = cls;
+            if (text != null) n.textContent = text;
+            return n;
+        };
+
+        // Tipo de cambio (opcional)
+        const tc = cfg.tipoCambio || {};
+        const valor = String(tc.valor || '').trim();
+        const hasRate = !!(valor && rateBox);
+        if (hasRate) {
+            $('#rate-value').textContent = '$' + valor + ' MXN por USD';
+            const meta = [fmtDate(tc.fecha) && 'Actualizado: ' + fmtDate(tc.fecha), String(tc.fuente || '').trim() && 'Fuente: ' + String(tc.fuente).trim()].filter(Boolean);
+            $('#rate-meta').textContent = meta.join(' · ');
+            rateBox.hidden = false;
+        }
+
+        // Avisos vigentes, del más reciente al más antiguo
+        const items = (Array.isArray(cfg.items) ? cfg.items : [])
+            .filter((it) => it && typeof it === 'object' && it.activo !== false && String(it.titulo || '').trim())
+            .filter((it) => !String(it.vigencia || '').trim() || String(it.vigencia).trim() >= today)
+            .sort((a, b) => String(b.fecha || '').localeCompare(String(a.fecha || '')))
+            .slice(0, 6);
+
+        if (!items.length && !hasRate && cfg.mostrarSiVacio === false) { hideAll(); return; }
+
+        if (items.length) {
+            if (empty) empty.remove();
+            items.forEach((it, i) => {
+                const tipo = TYPES[it.tipo] ? it.tipo : 'noticia';
+                const card = make('article', 'notice notice--' + tipo);
+                card.setAttribute('data-reveal', 'up');
+                if (i % 3) card.setAttribute('data-delay', String(i % 3));
+
+                const meta = make('div', 'notice__meta');
+                meta.appendChild(make('span', 'notice__tag', TYPES[tipo]));
+                const dateTxt = fmtDate(it.fecha);
+                if (dateTxt) {
+                    const t = make('time', 'notice__date', dateTxt);
+                    t.setAttribute('datetime', String(it.fecha).trim());
+                    meta.appendChild(t);
+                }
+                card.appendChild(meta);
+                card.appendChild(make('h3', null, String(it.titulo).trim()));
+                if (String(it.texto || '').trim()) card.appendChild(make('p', null, String(it.texto).trim()));
+                const href = safeUrl(it.enlace);
+                if (href) {
+                    const a = make('a', 'notice__link', tipo === 'aduana' ? 'Ver circular' : 'Más información');
+                    a.href = href; a.target = '_blank'; a.rel = 'noopener noreferrer';
+                    card.appendChild(a);
+                }
+                list.appendChild(card);
+            });
+        }
+    }
+
+    /* ------------------------------------------------------------------
+       15. ARRANQUE
     ------------------------------------------------------------------ */
     function init() {
         if ('scrollRestoration' in history && !location.hash) {
@@ -1378,6 +1523,7 @@
         initSmoothScroll();
         const heroScene = initHeroGlobe();
         initCoverage();
+        initNotices();
         initNav();
         initReveal();
         initCounters();
@@ -1396,14 +1542,9 @@
             rz = setTimeout(() => scenes.forEach((s) => s.resize()), 120);
         });
 
-        if (!reduceMotion) requestAnimationFrame(mainLoop);
-        else {
-            // Movimiento reducido: sin bucle continuo, pero el estado ligado al scroll sigue actualizándose
-            const sync = () => frameHooks.forEach((fn) => fn(0));
-            window.addEventListener('scroll', sync, { passive: true });
-            window.addEventListener('resize', sync);
-            sync();
-        }
+        // El bucle corre siempre: el globo debe girar en cualquier equipo. Con "reducir animaciones"
+        // activo el globo gira a ritmo calmado y se desactivan parallax, giro por scroll y efectos de puntero.
+        requestAnimationFrame(mainLoop);
     }
 
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
